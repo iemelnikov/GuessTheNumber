@@ -20,19 +20,14 @@ namespace GuessTheNumber
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex.ToString());
                 }
             }
         }
 
         public void Log(string logMessage, TextWriter txtWriter)
         {
-            try
-            {
-                txtWriter.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}: {logMessage}");
-            }
-            catch (Exception ex)
-            {
-            }
+            txtWriter.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}: {logMessage}");
         }
     }
 }

@@ -5,7 +5,6 @@
     /// </summary>
     internal class TheNumberToBeGuessedSettings : Settings
     {
-
         private int _numberOfAttempts;
         /// <summary>
         /// Кол-во попыток отгадывания и диапазон чисел
