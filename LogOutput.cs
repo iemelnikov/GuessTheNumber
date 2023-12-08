@@ -15,7 +15,7 @@ namespace GuessTheNumber
                 {
                     using (StreamWriter w = File.AppendText($"{exePath}\\log.txt"))
                     {
-                        Log(logMessage, w);
+                        w.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}: {logMessage}");
                     }
                 }
                 catch (Exception ex)
@@ -23,11 +23,6 @@ namespace GuessTheNumber
                     Console.WriteLine(ex.ToString());
                 }
             }
-        }
-
-        public void Log(string logMessage, TextWriter txtWriter)
-        {
-            txtWriter.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}: {logMessage}");
         }
     }
 }
