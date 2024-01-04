@@ -4,10 +4,8 @@
     {
         static void Main(string[] args)
         {
-            var userInputOutput = new UserInputOutputFromConsole();
-            var logOutput = new LogOutput();
-            var numbToBeGuessedSettings = new TheNumberToBeGuessedSettings(userInputOutput);
-            Game game = new GuessTheNumberGame(numbToBeGuessedSettings, userInputOutput, logOutput);
+            var injector = new GuessTheNumberGameInjector();
+            Game game = injector.ResolveGame();
             game.Play();
         }
     }

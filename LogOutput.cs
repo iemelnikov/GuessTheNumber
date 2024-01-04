@@ -7,7 +7,7 @@ namespace GuessTheNumber
 
         public void OutputMessage(string logMessage)
         {
-            var asmLocation = Assembly.GetExecutingAssembly().Location;
+            string asmLocation = Assembly.GetExecutingAssembly().Location;
             if (!string.IsNullOrEmpty(asmLocation))
             {
                 string? exePath = Path.GetDirectoryName(asmLocation);

@@ -5,25 +5,24 @@
     /// </summary>
     internal class GuessTheNumberGame : Game
     {
-        public GuessTheNumberGame(TheNumberToBeGuessedSettings settings, IUserInputOutput userInputOutput, IOutput logOutput) : base(settings, userInputOutput, logOutput)
+        private INumberGenerator _numbGen;
+
+        public INumberGenerator NumbGen { get { return _numbGen; } }
+
+        public GuessTheNumberGame(TheNumberToBeGuessedSettings settings, INumberGenerator NumbGen, IUserInputOutput userInputOutput, IOutput logOutput) : base(settings, userInputOutput, logOutput)
         {
+            _numbGen = NumbGen;
         }
 
         public override void Play()
         {
-            Settings.LoadSettings();
             // Генерируем число для отгадывания.
-            var rnd = new Random();
-            var NumbToBeGuessedSettings = (TheNumberToBeGuessedSettings)Settings;
-            // Получить случайное число:
-            int theNumberToBeGuessed = rnd.Next(NumbToBeGuessedSettings.MinValue, NumbToBeGuessedSettings.MaxValue);
+            int theNumberToBeGuessed = NumbGen.Generate();
+            TheNumberToBeGuessedSettings NumbToBeGuessedSettings = (TheNumberToBeGuessedSettings)Settings;
             for (int i = 1; i <= NumbToBeGuessedSettings.NumberOfAttemps; i++)
             {
                 string outputMessage = $"Попытка отгадывания {i} из {NumbToBeGuessedSettings.NumberOfAttemps}.";
-                foreach (var output in GetAllOutputs())
-                {
-                    output.OutputMessage(outputMessage);
-                }
+                OutputMessageToAllOutputs(outputMessage);
                 int? theGuessedNumberFromUser;
                 do
                 {
@@ -33,10 +32,7 @@
                 if (theGuessedNumberFromUser == theNumberToBeGuessed)
                 {
                     outputMessage = $"Вы верно угадали загаданное число {theNumberToBeGuessed}!";
-                    foreach (var output in GetAllOutputs())
-                    {
-                        output.OutputMessage(outputMessage);
-                    }
+                    OutputMessageToAllOutputs(outputMessage);
                     break;
                 }
                 else
@@ -45,11 +41,16 @@
                         outputMessage = $"К сожалению, вы не отгадали загаданное число. Это было число {theNumberToBeGuessed}!";
                     else
                         outputMessage = $"Загаданное число {(theGuessedNumberFromUser > theNumberToBeGuessed ? "мен" : "бол")}ьше вашего варианта ({theGuessedNumberFromUser})!";
-                    foreach (var output in GetAllOutputs())
-                    {
-                        output.OutputMessage(outputMessage);
-                    }
+                    OutputMessageToAllOutputs(outputMessage);
                 }
+            }
+        }
+
+        private void OutputMessageToAllOutputs(string outputMessage)
+        {
+            foreach (IOutput output in GetAllOutputs())
+            {
+                output.OutputMessage(outputMessage);
             }
         }
     }

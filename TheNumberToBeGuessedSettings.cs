@@ -19,14 +19,14 @@
 
         private int _maxValue;
 
-        public TheNumberToBeGuessedSettings(IUserInputOutput userInputOutput) : base(userInputOutput)
-        {
-        }
-
         /// <summary>
         /// Максимальное значение для загадываемого числа
         /// </summary>
         public int MaxValue { get { return Math.Max(_maxValue, _minValue); } }
+
+        public TheNumberToBeGuessedSettings(IUserInputOutput userInputOutput) : base(userInputOutput)
+        {
+        }
 
         public override void LoadSettings()
         {
